@@ -387,10 +387,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         name = '${userDoc['firstName']} ${userDoc['surName']}';
       }
 
+      // এখানে Timestamp এর পরিবর্তে FieldValue.serverTimestamp() ব্যবহার করা হয়েছে যা একশ ভাগ কাজ করবে
       await FirebaseFirestore.instance.collection('posts').add({
         'userName': name,
         'content': _postController.text.trim(),
-        'time': Timestamp.now(),
+        'time': FieldValue.serverTimestamp(),
         'uid': user.uid,
       });
 
