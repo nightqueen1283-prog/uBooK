@@ -12,9 +12,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   easy_localization: ^3.0.7
-  firebase_core: ^2.32.0
-  firebase_auth: ^5.1.0
-  cloud_firestore: ^4.17.5
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
 
 dev_dependencies:
   flutter_test:
