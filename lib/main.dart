@@ -283,7 +283,6 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
-          // চ্যাট আইকন
           IconButton(
             icon: const Icon(Icons.chat),
             onPressed: () {
@@ -293,7 +292,6 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
-          // লগআউট বাটন
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
@@ -304,7 +302,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // পোস্ট লেখার শর্টকাট বাটন
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton.icon(
@@ -323,7 +320,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const Divider(),
-          // ফায়ারস্টোর থেকে রিয়েল-টাইম পোস্ট ফিড দেখানো
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance.collection('posts').orderBy('time', descending: true).snapshots(),
@@ -332,7 +328,7 @@ class HomeScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  const Center(child: Text('কোনো পোস্ট নেই। প্রথম পোস্টটি আপনি করুন!'));
+                  return const Center(child: Text('কোনো পোস্ট নেই। প্রথম পোস্টটি আপনি করুন!'));
                 }
                 
                 final posts = snapshot.data!.docs;
@@ -385,14 +381,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // ইউজারের নাম বা তথ্য সংগ্রহ করা
       DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
       String name = 'ব্যবহারকারী';
       if (userDoc.exists) {
         name = '${userDoc['firstName']} ${userDoc['surName']}';
       }
 
-      // ফায়ারস্টোরে পোস্ট সেভ করা
       await FirebaseFirestore.instance.collection('posts').add({
         'userName': name,
         'content': _postController.text.trim(),
@@ -428,7 +422,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 backgroundColor: Colors.deepPurple,
                 foregroundColor: Colors.white,
               ),
-              const Text('পোস্ট করুন', style: TextStyle(fontSize: 18)),
+              child: const Text('পোস্ট করুন', style: TextStyle(fontSize: 18)),
             ),
           ],
         ),
@@ -443,7 +437,6 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ডেমো চ্যাট লিস্ট (পরবর্তীতে এটিও ফায়ারস্টোর থেকে আনা যাবে)
     final List<String> friends = ['রহিম আহমেদ', 'করিম উল্লাহ', 'ফাহিম ইসলাম'];
 
     return Scaffold(
