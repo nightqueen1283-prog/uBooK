@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('login'.tr()),
         actions: [
           PopupMenuButton<Locale>(
-            onChanged: (Locale locale) {
+            onSelected: (Locale locale) {
               context.setLocale(locale);
             },
             itemBuilder: (context) => const [
@@ -149,13 +149,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logOut() async {
+      await FirebaseAuth.instance.signOut();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('uBooK Feed'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () async => await FirebaseAuth.instance.signOut(),
+            onPressed: logOut,
           ),
         ],
       ),
